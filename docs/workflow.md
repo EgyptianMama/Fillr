@@ -352,3 +352,26 @@ LLM provider -> API: answer
 API -> Postgres: store response
 API -> Client: answer + citations + matched context
 ```
+
+## 11. Deployment Flow
+
+```text
+Developer -> GitHub: push to main
+GitHub Actions -> CI: run tests + lint
+GitHub Actions -> Oracle VM: SSH deploy
+Oracle VM -> Docker Compose: pull code, rebuild, restart
+Docker Compose -> Postgres: run Alembic migrations
+Docker Compose -> Caddy: serve HTTPS (auto-TLS)
+Docker Compose -> API: start FastAPI on :8000
+Docker Compose -> Worker: start poll loop
+```
+
+The production Docker Compose stack includes four services:
+
+1. **Postgres** — database with persistent volume.
+2. **API** — FastAPI served by Uvicorn.
+3. **Worker** — same Docker image, different entrypoint.
+4. **Caddy** — reverse proxy with automatic Let's Encrypt TLS.
+
+See `docs/deployment.md` for full setup instructions.
+

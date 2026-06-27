@@ -330,7 +330,38 @@ Acceptance criteria:
 - Worker crash can be recovered or retried.
 - Full local stack runs through Docker Compose.
 
-## 16. Optional Milestone 13 - v2 Learning Extensions
+## 16. Milestone 13 - Deployment
+
+Objective:
+
+Deploy the full stack to Oracle Cloud Always Free for zero ongoing cost.
+
+Tasks:
+
+- Create `Dockerfile` for API and worker (shared image).
+- Create `docker-compose.prod.yml` with Postgres, API, worker, and Caddy.
+- Create `Caddyfile` for automatic TLS via Let's Encrypt.
+- Set up Oracle Cloud ARM VM (VM.Standard.A1.Flex, 4 OCPU, 24 GB RAM).
+- Configure DuckDNS for a free subdomain.
+- Open firewall ports (22, 80, 443).
+- Create GitHub Actions CI pipeline (test on every push).
+- Create GitHub Actions deploy pipeline (SSH deploy on merge to main).
+- Create systemd service for auto-start on VM boot.
+- Create daily Postgres backup script with 7-day retention.
+- Create `.env.example` with all environment variables documented.
+- Write `docs/deployment.md` with full setup instructions.
+
+Acceptance criteria:
+
+- `docker compose -f docker-compose.prod.yml up -d` starts all services.
+- Caddy serves HTTPS automatically with a valid TLS certificate.
+- CI runs tests on every push.
+- Merge to main triggers automatic deployment.
+- VM reboot brings services back automatically.
+- Backup script produces a valid SQL dump.
+- Full user journey works over HTTPS: submit repo, watch ingestion, browse files, ask question, see answer.
+
+## 17. Optional Milestone 14 - v2 Learning Extensions
 
 Pick these after the core path works:
 
@@ -342,19 +373,19 @@ Pick these after the core path works:
 - Add auth.
 - Add Celery or arq to compare against Postgres queue.
 
-## 17. Suggested Work Division
+## 18. Suggested Work Division
 
 For two people:
 
 - Person A: API, database, schemas, endpoints, UI.
 - Person B: worker, clone, parser, git miner, graph assembly.
-- Shared: LLM context, integration tests, Docker Compose.
+- Shared: LLM context, integration tests, Docker Compose, deployment.
 
 For three people:
 
 - Person A: API/database/UI.
 - Person B: worker/ingestion/parser/git.
-- Person C: LLM/context/testing/devops.
+- Person C: LLM/context/testing/devops/deployment.
 
 For solo development:
 
@@ -366,8 +397,9 @@ For solo development:
 6. Add graph.
 7. Add LLM.
 8. Add UI polish.
+9. Deploy to Oracle Cloud.
 
-## 18. Dependency Order
+## 19. Dependency Order
 
 ```text
 Skeleton
@@ -383,9 +415,10 @@ Skeleton
   -> UI
   -> Re-ingestion/Cancellation
   -> Hardening
+  -> Deployment
 ```
 
-## 19. Project Checkpoints
+## 20. Project Checkpoints
 
 Use these checkpoints to avoid getting lost:
 
@@ -397,8 +430,9 @@ Use these checkpoints to avoid getting lost:
 - Checkpoint F: File detail endpoint shows structure and history.
 - Checkpoint G: `/explain` returns cited answer.
 - Checkpoint H: Browser UI can run the main workflow.
+- Checkpoint I: Application is live on Oracle Cloud with HTTPS.
 
-## 20. First Implementation Slice
+## 21. First Implementation Slice
 
 The first practical slice should be:
 

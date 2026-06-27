@@ -1,0 +1,92 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:India Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Vivek A:mailto:Vivek.A@marichi.energy
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=prachibhus
+ han.89@gmail.com:mailto:prachibhushan.89@gmail.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=yasharth.s
+ ocial@gmail.com:mailto:yasharth.social@gmail.com
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Marichi En
+ ergy:mailto:Contact@marichi.energy
+DESCRIPTION;LANGUAGE=en-US:Hi Everyone\,\n\nAs discussed\, we will be conne
+ cting on alternative days for Progress so far || Brain storming & Support.
+ \n\nRegards\n\n\n_________________________________________________________
+ _______________________\nMicrosoft Teams meeting\nJoin: https://teams.micr
+ osoft.com/meet/41922805536514?p=RPTb4gwEipWfLRCZUU\nMeeting ID: 419 228 05
+ 5 365 14\nPasscode: 44uA6CL9\n________________________________\nNeed help?
+ <https://aka.ms/JoinTeamsMeeting?omkt=en-US> | System reference<https://te
+ ams.microsoft.com/l/meetup-join/19%3ameeting_MmIzMTJmZjYtNTM1ZC00Njg4LTgwZ
+ WUtM2Y1NWVjYjZiZTJl%40thread.v2/0?context=%7b%22Tid%22%3a%221fa5c7d2-ff7a-
+ 440a-aec0-abd0584499f8%22%2c%22Oid%22%3a%22aa86192e-243e-40af-a7da-d459c2b
+ b7230%22%7d>\nFor organizers: Meeting options<https://teams.microsoft.com/
+ meetingOptions/?organizerId=aa86192e-243e-40af-a7da-d459c2bb7230&tenantId=
+ 1fa5c7d2-ff7a-440a-aec0-abd0584499f8&threadId=19_meeting_MmIzMTJmZjYtNTM1Z
+ C00Njg4LTgwZWUtM2Y1NWVjYjZiZTJl@thread.v2&messageId=0&language=en-US>\n___
+ __________________________________________________________________________
+ ___\n
+RRULE:FREQ=WEEKLY;UNTIL=20261219T083000Z;INTERVAL=1;BYDAY=SA;WKST=SU
+UID:040000008200E00074C5B7101A82E0080000000048D30078F205DD01000000000000000
+ 010000000D5AADD4792B4DE4EAC4DC1460CC81C71
+SUMMARY;LANGUAGE=en-US:Task Progress
+DTSTART;TZID=India Standard Time:20260627T140000
+DTEND;TZID=India Standard Time:20260627T150000
+CLASS:PRIVATE
+PRIORITY:5
+DTSTAMP:20260627T051325Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:1
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+X-MICROSOFT-CDO-APPT-SEQUENCE:1
+X-MICROSOFT-CDO-OWNERAPPTID:2124864754
+X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:1
+X-MICROSOFT-ONLINEMEETINGEXTERNALLINK:
+X-MICROSOFT-ONLINEMEETINGINFORMATION:{"OnlineMeetingChannelId":null\,"Onlin
+ eMeetingProvider":3}
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/
+ 19%3ameeting_MmIzMTJmZjYtNTM1ZC00Njg4LTgwZWUtM2Y1NWVjYjZiZTJl%40thread.v2/
+ 0?context=%7b%22Tid%22%3a%221fa5c7d2-ff7a-440a-aec0-abd0584499f8%22%2c%22O
+ id%22%3a%22aa86192e-243e-40af-a7da-d459c2bb7230%22%7d
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.microsof
+ t.com/teams/1fa5c7d2-ff7a-440a-aec0-abd0584499f8/aa86192e-243e-40af-a7da-d
+ 459c2bb7230/19_meeting_MmIzMTJmZjYtNTM1ZC00Njg4LTgwZWUtM2Y1NWVjYjZiZTJl@th
+ read.v2/0
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_MmIzMTJmZjYtNTM1ZC00Njg
+ 4LTgwZWUtM2Y1NWVjYjZiZTJl@thread.v2"\,"rid":0\,"mid":0\,"uid":null\,"priva
+ te":true\,"type":0}
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-ISRESPONSEREQUESTED:TRUE
+X-MICROSOFT-LOCATIONDISPLAYNAME:Microsoft Teams Meeting
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"Microsoft Teams Meeting"\,"LocationA
+ nnotation":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"
+ LocationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"Locatio
+ nFullAddress":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR

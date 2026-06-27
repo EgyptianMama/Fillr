@@ -22,6 +22,7 @@ RepoLens should eventually support these capabilities:
 - Assemble a bounded, cited context packet for an LLM explanation.
 - Cache LLM responses by context and question hash.
 - Show a small web UI for repository status, file browsing, graph neighbors, history, and explanations.
+- Deploy to Oracle Cloud Always Free for zero ongoing cost with automatic HTTPS.
 
 ## 3. High-Level Components
 
@@ -137,11 +138,11 @@ Core tables:
 | `files` | id, repo_id, path, language, loc, size_bytes, content_hash | File inventory |
 | `symbols` | id, file_id, qualified_name, kind, start_line, end_line | Functions/classes/methods per file |
 | `edges` | id, repo_id, source_type, source_id, target_type, target_id, edge_type, weight, metadata | Imports, calls, co-change edges |
-| `commits` | id, repo_id, sha, author_name, author_email, committed_at, message | Git commits |
+| `commits` | id, repo_id, sha, author_name, author_email, committed_at, message, files_changed | Git commits |
 | `file_commits` | file_id, commit_id, additions, deletions, old_path | File-to-commit join |
-| `jobs` | id, repo_id, type, status, progress_percent, stage, error, attempts, timestamps | Async job lifecycle |
+| `jobs` | id, repo_id, type, status, progress_percent, stage, error, error_code, attempts, timestamps | Async job lifecycle |
 | `parse_errors` | id, repo_id, file_path, error_type, message | Non-fatal parser failures |
-| `llm_cache` | id, repo_id, context_hash, question_hash, response_json, created_at | Synthesis cache |
+| `llm_cache` | id, repo_id, context_hash, question_hash, response_json, model_name, created_at | Synthesis cache |
 
 Recommended indexes:
 
@@ -256,7 +257,25 @@ Testing should grow with each subsystem:
 - Embedding-based semantic search.
 - Distributed worker scaling.
 
-## 10. Deferred Enhancements
+## 10. Deployment Architecture
+
+RepoLens is deployed to Oracle Cloud Always Free (ARM VM) with zero ongoing cost.
+
+Components:
+
+- **Caddy** — reverse proxy with automatic Let's Encrypt TLS. Chosen over Nginx for zero-config HTTPS.
+- **FastAPI app** — served by Uvicorn behind Caddy.
+- **Worker** — separate container using the same Docker image, running the poll loop.
+- **PostgreSQL** — containerized, data persisted to a Docker volume.
+- **DuckDNS** — free dynamic DNS for a public subdomain.
+- **GitHub Actions** — CI (test on push) and CD (SSH deploy on merge to main).
+- **systemd** — auto-starts Docker Compose on VM boot.
+
+All four services (Caddy, API, Worker, Postgres) run inside Docker Compose on a single ARM VM with 4 OCPUs and 24 GB RAM.
+
+See `docs/deployment.md` for full setup instructions.
+
+## 11. Deferred Enhancements
 
 - Embeddings with `pgvector`.
 - JS/TS parser subprocess with the same edge-list contract.

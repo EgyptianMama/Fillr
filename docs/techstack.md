@@ -8,12 +8,19 @@
 | API Framework | FastAPI | Async-friendly, typed request/response models, good docs UI |
 | Validation | Pydantic | Request schemas, response schemas, app settings |
 | Database | PostgreSQL | Tables, indexes, recursive CTEs, queue, cache, future `pgvector` |
+| ORM | SQLAlchemy 2.0 (async) | Industry standard, `mapped_column` style, full async support |
+| DB Driver | asyncpg + psycopg2-binary | Async for app, sync for Alembic migrations |
 | Migrations | Alembic | Versioned database schema |
 | Async Processing | Postgres queue with `SKIP LOCKED` | No Redis dependency for v1; good learning value |
 | Git Mining | `git` subprocess | Direct access to fast native git commands |
-| LLM Client | Provider-agnostic HTTP wrapper | Swap providers without changing context assembly |
+| LLM Client | Google Gemini API (free tier) | Zero cost, 15 RPM and 1M tokens/day on Flash |
+| LLM Testing | FakeLLMClient | Canned responses for deterministic tests |
 | Frontend | Server-rendered HTML + Jinja + HTMX | Simple UI without a separate SPA build pipeline |
+| Reverse Proxy | Caddy | Automatic Let's Encrypt TLS, zero-config HTTPS |
 | Containers | Docker Compose | Local `api`, `worker`, and `postgres` services |
+| Deployment | Oracle Cloud Always Free | 4 ARM OCPUs, 24 GB RAM, zero cost |
+| Domain | DuckDNS (free subdomain) | Free dynamic DNS, works with Caddy auto-TLS |
+| CI/CD | GitHub Actions | Free for public repos, SSH deploy |
 | Testing | pytest, httpx, testcontainers or Docker Compose | Unit, API, database, and worker integration tests |
 | Formatting | ruff and black | Consistent code style |
 
@@ -77,13 +84,14 @@ It teaches:
 - Caching.
 - Migrations.
 
-Use SQLAlchemy if you want ORM practice. Use SQLModel if you want a tighter FastAPI/Pydantic connection. Use raw SQL for graph traversal and queue-claim queries where it is clearer.
+Use SQLAlchemy 2.0 with async support and the `mapped_column` style. This is the finalized decision over SQLModel because SQLAlchemy is the industry standard, has better documentation, and provides more learning value for understanding ORMs.
 
 Recommended approach:
 
-- SQLAlchemy models for core tables.
+- SQLAlchemy 2.0 models with `mapped_column` for core tables.
+- asyncpg as the async driver, psycopg2-binary for Alembic.
 - Alembic migrations for schema changes.
-- Repository functions for database access.
+- Repository query functions for database access (in `db/queries/`).
 - Raw SQL for `SKIP LOCKED`, recursive CTEs, and bulk insert paths.
 
 ## 4. Worker Queue
@@ -260,7 +268,23 @@ Recommended testing layers:
 | Worker integration | local fixture repo | full ingest reaches `ready` |
 | LLM tests | fake client | context packet produces cached answer |
 
-## 12. Deferred / v2 Tech
+## 12. Deployment Stack
+
+The application is deployed to Oracle Cloud Always Free:
+
+| Component | Technology | Why |
+|---|---|---|
+| VM | Oracle Cloud VM.Standard.A1.Flex (ARM) | 4 OCPU, 24 GB RAM, free forever |
+| Reverse Proxy | Caddy | Auto-TLS with Let's Encrypt, simpler than Nginx |
+| Containers | Docker Compose | Same setup as local dev |
+| Auto-start | systemd | Starts Docker Compose on VM boot |
+| Domain | DuckDNS | Free subdomain, works with Caddy |
+| CI/CD | GitHub Actions | Free for public repos, SSH deploy on merge |
+| Backup | pg_dump + cron | Daily backup, 7-day retention |
+
+See `docs/deployment.md` for full setup instructions.
+
+## 13. Deferred / v2 Tech
 
 - `pgvector` for semantic retrieval.
 - JS/TS parsing using `acorn`, `esprima`, or tree-sitter.
@@ -268,3 +292,4 @@ Recommended testing layers:
 - More interactive graph visualization.
 - Authentication if the app becomes multi-user.
 - Object storage if retained clones or snapshots grow large.
+- Ollama for fully local/offline LLM as an alternative to Gemini.
